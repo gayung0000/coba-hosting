@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            width: 350px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p class="message" id="loginMessage"></p>
+        <p>Belum punya akun? <a href="daftar.html">Daftar di sini</a></p>
+        <p><a href="lupa-kata-sandi.html">Lupa kata sandi?</a></p>
+
+    </div>
+
+    <script>
+        // Auto-fill username jika baru saja daftar
+        window.onload = function () {
+            let lastUser = JSON.parse(localStorage.getItem("lastRegisteredUser"));
+            if (lastUser) {
+                document.getElementById("loginUsername").value = lastUser.username;
+            }
+        };
+
+        function login() {
+            let username = document.getElementById("loginUsername").value;
+            let password = document.getElementById("loginPassword").value;
+            let message = document.getElementById("loginMessage");
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            let validUser = users.find(user => user.username === username && user.password === password);
+
+            if (validUser) {
+                alert("Login berhasil!");
+                window.location.href = "index.html";
+            } else {
+                message.innerText = "Username atau password salah. Silakan coba lagi.";
+                message.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
